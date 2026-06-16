@@ -42,4 +42,4 @@ response = model.invoke(final_prompt)
 
 movie_data = parser.parse(response.content)
 
-print(json.dumps(movie_data.model_dump(), indent=2));
+print(json.dumps(movie_data.model_dump(), indent=2)); # Structure Output
