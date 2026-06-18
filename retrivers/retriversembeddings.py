@@ -1,23 +1,27 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter;
 from langchain_google_genai import GoogleGenerativeAIEmbeddings;
-from langchain_community.document_loaders import PyPDFLoader;
 from langchain_community.vectorstores import Chroma;
+from langchain_core.documents import Document;
 from dotenv import load_dotenv;
 import chromadb;
 import os;
 
 load_dotenv();
 
-data = PyPDFLoader("rag/docs/langchain.pdf");
-
-docs = data.load();
+data = [
+    Document(page_content="Gradient descent is an optimization algorithm used in machine learning."),
+    Document(page_content="Gradient descent minimizes the loss function."),
+    Document(page_content="Gradient descent is an optimization that minimizes the loss function."),
+    Document(page_content="Neural networks use gradient descent for training."),
+    Document(page_content="Support Vector Machines are supervised learning algorithms.")
+];
 
 splitter = RecursiveCharacterTextSplitter(
     chunk_size = 100,
     chunk_overlap = 10
 );
 
-chunks = splitter.split_documents(docs);
+chunks = splitter.split_documents(data);
 
 embedding_model = GoogleGenerativeAIEmbeddings(
     model="models/gemini-embedding-001",
@@ -31,8 +35,8 @@ chroma_client = chromadb.CloudClient(
 );
 
 vectorstore = Chroma.from_documents(
-    collection_name="langchain_vectorembeddings",
-    documents=docs,
+    collection_name="langchain_retrieversembeddings",
+    documents=chunks,
     embedding=embedding_model,
     client=chroma_client
 );

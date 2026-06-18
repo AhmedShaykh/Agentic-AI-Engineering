@@ -36,7 +36,7 @@ for r in result:
 
     print(r.metadata);
 
-retriver = vectorstore.as_retriever(); # Retriver
+retriver = vectorstore.as_retriever(); # Retriver (Default Similarity Search)
 
 docs = retriver.invoke("Explain deep learning"); # Runable (Chain)
 
