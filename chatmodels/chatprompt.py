@@ -27,7 +27,7 @@ prompt = ChatPromptTemplate.from_messages([
                 If the title is not explicitly mentioned, infer it from context.
                 If truly unknown, use "Unknown".
                 {format_instructions}
-    """),
+                """),
     ("human", "{paragraph}")
 ]);
 
